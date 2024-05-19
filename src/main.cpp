@@ -9,7 +9,7 @@
 int main() {
     SetConfigFlags(FLAG_VSYNC_HINT | FLAG_WINDOW_RESIZABLE);
 
-    InitWindow(640, 480, "Space Invaders");
+    InitWindow(640, 480, "Space Eaters");
 
     SpriteSheet sprite_sheet("./assets/images/spritesheet.png");
 

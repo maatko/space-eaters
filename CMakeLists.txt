@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.28)
-project(space-strike CXX)
+project(space-eaters CXX)
 
 set(CMAKE_CXX_STANDARD 17)
 
