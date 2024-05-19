@@ -8,7 +8,7 @@ int main() {
     // the window is set up
     Screen::Initialize(Screen::ID::MENU);
 
-    SetConfigFlags(FLAG_VSYNC_HINT | FLAG_WINDOW_RESIZABLE);
+    SetConfigFlags(FLAG_VSYNC_HINT);
 
     InitWindow(640, 480, "Space Eaters");
 

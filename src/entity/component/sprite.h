@@ -7,24 +7,35 @@
 
 #include "component.h"
 
+#include <unordered_map>
+
+struct Sprite {
+    float x;
+    float y;
+
+    float width;
+    float height;
+
+    float rotation;
+};
+
 class SpriteComponent : public Component {
 public:
-    SpriteComponent(float u, float v, float tex_width, float tex_height);
+    enum Direction {
+        UP,
+        DOWN,
+        LEFT,
+        RIGHT,
+        STILL
+    };
+public:
+    SpriteComponent(Sprite top, Sprite left, Sprite bottom, Sprite right, Sprite still);
 
 protected:
     void OnUpdate(float sc_width, float sc_height, float frame_time) override;
 
-public:
-    void Rotate(float rotation);
-
 protected:
-    float m_SpriteX;
-    float m_SpriteY;
-
-    float m_SpriteWidth;
-    float m_SpriteHeight;
-
-    float m_SpriteRotation;
+    std::unordered_map<SpriteComponent::Direction, Sprite> m_Sprites;
 };
 
 #endif //SPACE_EATERS_SPRITE_H

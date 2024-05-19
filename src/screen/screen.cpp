@@ -48,7 +48,7 @@ void Screen::Show(Screen::ID screen_id) {
     m_CurrentScreen = screen_id;
 
     if (m_CurrentScreen != Screen::ID::NONE) {
-        m_ScreenMap[m_CurrentScreen]->OnShow();
+        m_ScreenMap[m_CurrentScreen]->OnShow((float) GetScreenWidth(), (float) GetScreenHeight());
     }
 }
 

@@ -1,32 +1,36 @@
-//
-// Created by mat on 5/19/2024.
-//
-
 #include "sprite.h"
 
 #include <spritesheet.h>
 
-SpriteComponent::SpriteComponent(float u, float v, float tex_width, float tex_height) {
-    m_SpriteX = u;
-    m_SpriteY = v;
+#include "controller.h"
+#include "../entity.h"
 
-    m_SpriteWidth = tex_width;
-    m_SpriteHeight = tex_height;
-
-    m_SpriteRotation = 0;
+SpriteComponent::SpriteComponent(Sprite up, Sprite left, Sprite down, Sprite right, Sprite still) {
+    m_Sprites.insert({SpriteComponent::Direction::UP, up});
+    m_Sprites.insert({SpriteComponent::Direction::LEFT, left});
+    m_Sprites.insert({SpriteComponent::Direction::DOWN, down});
+    m_Sprites.insert({SpriteComponent::Direction::RIGHT, right});
+    m_Sprites.insert({SpriteComponent::Direction::STILL, still});
 }
 
 void SpriteComponent::OnUpdate(float sc_width, float sc_height, float frame_time) {
+    auto controller = m_Entity->GetComponent<ControllerComponent>();
+    auto direction = SpriteComponent::Direction::STILL;
+
+    float motionX = controller->GetMotionX();
+    if (motionX < 0) {
+        direction = SpriteComponent::Direction::LEFT;
+    } else if (motionX > 0) {
+        direction = SpriteComponent::Direction::RIGHT;
+    }
+
+    Sprite sprite = m_Sprites[direction];
+
     SpriteSheet::Get()->DrawSprite(
             *m_EntityPositionX, *m_EntityPositionY,
-            m_SpriteX, m_SpriteY,
+            sprite.x, sprite.y,
             *m_EntityWidth, *m_EntityHeight,
-            m_SpriteWidth, m_SpriteHeight,
-            m_SpriteRotation
+            sprite.width, sprite.height,
+            sprite.rotation
     );
 }
-
-void SpriteComponent::Rotate(float rotation) {
-    m_SpriteRotation = rotation;
-}
-

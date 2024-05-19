@@ -24,6 +24,8 @@ void Entity::AddComponent(Component *component) {
     component->m_EntityWidth = &m_Width;
     component->m_EntityHeight = &m_Height;
 
+    component->m_Entity = this;
+
     m_Components.push_back(component);
 }
 

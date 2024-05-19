@@ -7,11 +7,15 @@
 
 #include <raylib.h>
 
+class Entity;
+
 class Component {
 protected:
     virtual void OnUpdate(float sc_width, float sc_height, float frame_time) {};
 
 protected:
+    Entity *m_Entity = nullptr;
+
     float *m_EntityPositionX = nullptr;
     float *m_EntityPositionY = nullptr;
 

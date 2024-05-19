@@ -15,7 +15,7 @@ public:
         NONE
     };
 protected:
-    virtual void OnShow() {
+    virtual void OnShow(float sc_width, float sc_height) {
     }
 
     virtual bool OnDraw(float sc_width, float sc_height, float frame_time) {
