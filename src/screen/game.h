@@ -1,7 +1,3 @@
-//
-// Created by mat on 5/19/2024.
-//
-
 #ifndef SPACE_EATERS_GAME_H
 #define SPACE_EATERS_GAME_H
 

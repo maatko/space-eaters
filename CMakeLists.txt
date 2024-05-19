@@ -20,8 +20,11 @@ add_executable(
         src/screen/screen.cpp src/screen/screen.h
         src/screen/menu.cpp src/screen/menu.h
         src/screen/game.cpp src/screen/game.h
-        src/screen/leaderboard.cpp
-        src/screen/leaderboard.h
+        src/screen/leaderboard.cpp src/screen/leaderboard.h
+        src/entity/entity.cpp src/entity/entity.h
+        src/entity/component/sprite.cpp src/entity/component/sprite.h
+        src/entity/component/controller.cpp src/entity/component/controller.h
+        src/entity/component/component.h
 )
 
 # link raylib with the project

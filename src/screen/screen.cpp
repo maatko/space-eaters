@@ -56,6 +56,8 @@ void Screen::Clean() {
     printf("INFO: Freeing memory taken by the Screen system");
 
     for (const auto &item: m_ScreenMap) {
+        item.second->OnHide();
+
         delete item.second;
     }
 }
