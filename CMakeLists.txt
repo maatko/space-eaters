@@ -1,25 +1,31 @@
 cmake_minimum_required(VERSION 3.28)
 project(space-eaters CXX)
 
+# C++ language version
 set(CMAKE_CXX_STANDARD 17)
 
+# set up the source directory for the project
 set(PROJECT_SOURCE_DIR ${CMAKE_SOURCE_DIR}/src)
 
 # don't build the supplied examples
 set(BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
-set(BUILD_RAYGUI_EXAMPLES OFF CACHE BOOL "" FORCE)
 
 # include raylib
 add_subdirectory(vendor/raylib)
 
-# include raygui
-add_subdirectory(vendor/raygui/projects/CMake)
-
 # create the executable
-add_executable(${PROJECT_NAME} src/main.cpp src/spritesheet.h src/spritesheet.cpp)
+add_executable(
+        ${PROJECT_NAME}
+        src/main.cpp src/spritesheet.h src/spritesheet.cpp
+        src/screen/screen.cpp src/screen/screen.h
+        src/screen/menu.cpp
+        src/screen/menu.h
+        src/screen/game.cpp
+        src/screen/game.h
+)
 
 # link raylib with the project
-target_link_libraries(${PROJECT_NAME} raylib raygui)
+target_link_libraries(${PROJECT_NAME} raylib)
 
 # add the source directory as an include
 target_include_directories(${PROJECT_NAME} PUBLIC ${PROJECT_SOURCE_DIR})

@@ -1,38 +1,30 @@
 #include <cstdio>
 
-#define RAYGUI_IMPLEMENTATION
-
-#include <raylib.h>
-
-#include <spritesheet.h>
+#include <screen/screen.h>
 
 int main() {
-    SetConfigFlags(FLAG_VSYNC_HINT | FLAG_WINDOW_RESIZABLE);
+    // initialize the screen system before
+    // the window is set up
+    Screen::Initialize(Screen::ID::MENU);
 
+    SetConfigFlags(FLAG_VSYNC_HINT | FLAG_WINDOW_RESIZABLE);
     InitWindow(640, 480, "Space Eaters");
 
-    SpriteSheet sprite_sheet("./assets/images/spritesheet.png");
-
-    float offset = 0;
     while (!WindowShouldClose()) {
-        offset += 25.0f * GetFrameTime();
-
         BeginDrawing();
         {
             ClearBackground(BLACK);
 
-            sprite_sheet.DrawSprite(
-                    250, 250,
-                    0, 1,
-                    8 * 5, 7 * 5,
-                    8, 7,
-                    offset
-            );
-
-            offset += 25.0f * GetFrameTime();
+            if (Screen::Draw((float) GetScreenWidth(), (float) GetScreenHeight(), GetFrameTime())) {
+                break;
+            }
         }
         EndDrawing();
     }
+
+    // clean up any memory that
+    // has been taken by the screen system
+    Screen::Clean();
 
     CloseWindow();
 }
