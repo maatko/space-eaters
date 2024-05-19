@@ -14,6 +14,7 @@ public:
     enum ID {
         MENU,
         GAME,
+        LEADERBOARD,
 
         NONE
     };
@@ -27,6 +28,9 @@ protected:
 
     virtual void OnHide() {
     }
+
+protected:
+    static bool Button(const char *text, float x, float y, float width, float height, float font_size);
 
 public:
     static void Initialize(ID screen_id);

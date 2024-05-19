@@ -9,7 +9,7 @@
 #include <unordered_map>
 
 class SpriteSheet {
-public:
+private:
     explicit SpriteSheet(const char *texture_path);
 
 public:
@@ -21,6 +21,16 @@ public:
 
 private:
     Texture2D m_Texture = {0};
+
+public:
+    static void Initialize(const char *path);
+
+    static SpriteSheet* Get();
+
+    static void Clean();
+
+private:
+    static SpriteSheet *m_SpriteSheet;
 };
 
 #endif //SPACE_STRIKE_SPRITESHEET_H

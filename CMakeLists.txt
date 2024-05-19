@@ -18,10 +18,10 @@ add_executable(
         ${PROJECT_NAME}
         src/main.cpp src/spritesheet.h src/spritesheet.cpp
         src/screen/screen.cpp src/screen/screen.h
-        src/screen/menu.cpp
-        src/screen/menu.h
-        src/screen/game.cpp
-        src/screen/game.h
+        src/screen/menu.cpp src/screen/menu.h
+        src/screen/game.cpp src/screen/game.h
+        src/screen/leaderboard.cpp
+        src/screen/leaderboard.h
 )
 
 # link raylib with the project

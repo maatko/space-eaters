@@ -4,6 +4,8 @@
 
 #include <spritesheet.h>
 
+SpriteSheet *SpriteSheet::m_SpriteSheet = nullptr;
+
 SpriteSheet::SpriteSheet(const char *texture_path) {
     m_Texture = LoadTexture(texture_path);
 }
@@ -18,4 +20,16 @@ void SpriteSheet::DrawSprite(float x, float y, float u, float v, float width, fl
             rotation,
             WHITE
     );
+}
+
+void SpriteSheet::Initialize(const char *path) {
+    m_SpriteSheet = new SpriteSheet(path);
+}
+
+void SpriteSheet::Clean() {
+    delete m_SpriteSheet;
+}
+
+SpriteSheet *SpriteSheet::Get() {
+    return m_SpriteSheet;
 }
