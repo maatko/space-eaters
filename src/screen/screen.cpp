@@ -8,6 +8,7 @@
 #include "game.h"
 #include "leaderboard.h"
 
+#include <cstdio>
 #include <spritesheet.h>
 
 std::unordered_map<Screen::ID, Screen *> Screen::m_ScreenMap;

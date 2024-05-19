@@ -6,6 +6,7 @@
 
 
 #include <spritesheet.h>
+#include <math.h>
 
 static constexpr float PADDING = 15;
 

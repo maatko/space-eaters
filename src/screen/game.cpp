@@ -5,6 +5,7 @@
 #include "game.h"
 
 #include <spritesheet.h>
+#include <cstdio>
 
 #include <entity/entity.h>
 #include <entity/component/sprite.h>
