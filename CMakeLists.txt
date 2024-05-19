@@ -1,8 +1,7 @@
 cmake_minimum_required(VERSION 3.28)
-project(space-strike C)
+project(space-strike CXX)
 
-# C language version
-set(CMAKE_C_STANDARD 99)
+set(CMAKE_CXX_STANDARD 17)
 
 set(PROJECT_SOURCE_DIR ${CMAKE_SOURCE_DIR}/src)
 
@@ -17,7 +16,7 @@ add_subdirectory(vendor/raylib)
 add_subdirectory(vendor/raygui/projects/CMake)
 
 # create the executable
-add_executable(${PROJECT_NAME} src/main.c)
+add_executable(${PROJECT_NAME} src/main.cpp src/spritesheet.h src/spritesheet.cpp)
 
 # link raylib with the project
 target_link_libraries(${PROJECT_NAME} raylib raygui)
