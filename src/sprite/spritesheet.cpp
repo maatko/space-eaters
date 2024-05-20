@@ -2,7 +2,7 @@
 // Created by mat on 5/19/2024.
 //
 
-#include <spritesheet.h>
+#include "spritesheet.h"
 
 SpriteSheet *SpriteSheet::m_SpriteSheet = nullptr;
 
@@ -27,6 +27,16 @@ void SpriteSheet::Initialize(const char *path) {
 }
 
 void SpriteSheet::Clean() {
+    delete Sprite::BOSS;
+    delete Sprite::LOGO;
+
+    delete Sprite::HEART;
+    delete Sprite::BOMB;
+
+    delete Sprite::FRAME_LEFT;
+    delete Sprite::FRAME_FULL;
+    delete Sprite::FRAME_RIGHT;
+
     delete m_SpriteSheet;
 }
 

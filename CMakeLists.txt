@@ -16,15 +16,18 @@ add_subdirectory(vendor/raylib)
 # create the executable
 add_executable(
         ${PROJECT_NAME}
-        src/main.cpp src/spritesheet.h src/spritesheet.cpp
+        src/main.cpp src/sprite/spritesheet.h src/sprite/spritesheet.cpp
         src/screen/screen.cpp src/screen/screen.h
         src/screen/menu.cpp src/screen/menu.h
         src/screen/game.cpp src/screen/game.h
         src/screen/leaderboard.cpp src/screen/leaderboard.h
         src/entity/entity.cpp src/entity/entity.h
-        src/entity/component/sprite.cpp src/entity/component/sprite.h
         src/entity/component/controller.cpp src/entity/component/controller.h
         src/entity/component/component.h
+        src/sprite/sprite.cpp
+        src/sprite/sprite.h
+        src/entity/component/render.cpp
+        src/entity/component/render.h
 )
 
 # link raylib with the project

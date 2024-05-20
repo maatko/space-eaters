@@ -4,9 +4,9 @@
 
 #include "menu.h"
 
+#include <cmath>
 
-#include <spritesheet.h>
-#include <math.h>
+#include "sprite/spritesheet.h"
 
 static constexpr float PADDING = 15;
 
@@ -18,42 +18,39 @@ static constexpr float SPLASH_HEIGHT = 23 * 1.5f;
 
 static constexpr float BUTTON_WIDTH = 200;
 static constexpr float BUTTON_HEIGHT = 50;
+static constexpr float BUTTON_TEXT_SIZE = 15;
 
 bool MenuScreen::OnDraw(float sc_width, float sc_height, float frame_time) {
     float pos_x = (sc_width - BUTTON_WIDTH) / 2.0f;
     float pos_y = (sc_height - (BUTTON_HEIGHT + PADDING) * 3 + (BANNER_HEIGHT + PADDING * 3)) / 2.0f;
 
-    SpriteSheet::Get()->DrawSprite(
+    Sprite::BOSS->Draw(
             (sc_width - BANNER_WIDTH) / 2.0f, pos_y - (BANNER_HEIGHT + PADDING * 3),
-            41, 74,
             BANNER_WIDTH, BANNER_HEIGHT,
-            30, 23,
             0
     );
 
     float animation = (1.8f - (float) abs(sin((GetTime() * PI * 2.0) * 0.1))) * 100.0F / (float) (SPLASH_WIDTH + 32);
     {
-        SpriteSheet::Get()->DrawSprite(
+        Sprite::LOGO->Draw(
                 (sc_width - BANNER_WIDTH) / 2.0f + BANNER_WIDTH - SPLASH_WIDTH / 2.0f,
                 pos_y - (BANNER_HEIGHT + PADDING * 3) + BANNER_HEIGHT / 2.0f + SPLASH_HEIGHT,
-                73, 74,
                 SPLASH_WIDTH * animation, SPLASH_HEIGHT * animation,
-                47, 23,
                 -25
         );
     }
 
-    if (Button("Play", pos_x, pos_y, 200, 50, 15)) {
+    if (Button("Play", pos_x, pos_y, BUTTON_WIDTH, BUTTON_HEIGHT, BUTTON_TEXT_SIZE)) {
         Screen::Show(Screen::ID::GAME);
         return false;
     }
     pos_y += BUTTON_HEIGHT + PADDING;
 
-    if (Button("Leaderboard", pos_x, pos_y, 200, 50, 15)) {
+    if (Button("Leaderboard", pos_x, pos_y, BUTTON_WIDTH, BUTTON_HEIGHT, BUTTON_TEXT_SIZE)) {
         Screen::Show(Screen::ID::LEADERBOARD);
         return false;
     }
     pos_y += BUTTON_HEIGHT + PADDING;
 
-    return Button("Quit", pos_x, pos_y, 200, 50, 15);
+    return Button("Quit", pos_x, pos_y, BUTTON_WIDTH, BUTTON_HEIGHT, BUTTON_TEXT_SIZE);
 }

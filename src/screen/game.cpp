@@ -4,109 +4,142 @@
 
 #include "game.h"
 
-#include <spritesheet.h>
+#include "sprite/spritesheet.h"
 #include <cstdio>
 
 #include <entity/entity.h>
-#include <entity/component/sprite.h>
 #include <entity/component/controller.h>
+
+static const float FRAME_PADDING = 0.01f;
+static const float FRAME_HEIGHT = 0.2f;
+static const float FRAME_HALF_WIDTH = 0.2f;
+static const float FRAME_FULL_WIDTH = 1.0f - (FRAME_HALF_WIDTH * 2 + FRAME_PADDING);
+static const float FRAME_ICON_SIZE = 24;
+static const int FRAME_FONT_SIZE = 20;
 
 struct {
     Entity *player;
+
     float score;
     float multiplier;
+
     int hearts;
-} game;
+    int bombs;
+} Game;
 
-static void draw_hearts_display(float sc_width, float sc_height) {
-    SpriteSheet::Get()->DrawSprite(
-            0, 0,
-            1, 106,
-            sc_width * 0.2f, sc_height * 0.2f,
-            31, 22,
-            0
-    );
+static void DrawHUD(float sc_width, float sc_height) {
+    char text_display[1024];
 
-    SpriteSheet::Get()->DrawSprite(
-            (sc_width * 0.2f - 54) / 2.0f, (sc_height * 0.2f - 25) / 2.0f,
-            51, 20,
-            25, 25,
-            8, 7,
-            0
-    );
+    float x_pos = 0;
+    float y_pos = 0;
 
-    char hearts_display[1024];
-    sprintf(hearts_display, "%d", (int) game.hearts);
+    // left side of the HUD
+    {
+        Sprite::FRAME_LEFT->Draw(
+                x_pos, y_pos,
+                sc_width * FRAME_HALF_WIDTH, sc_height * FRAME_HEIGHT,
+                0
+        );
 
-    DrawText(
-            hearts_display,
-            (int) ((sc_width * 0.2f - (float) MeasureText(hearts_display, 20)) / 2.0f + 15),
-            (int) ((sc_height * 0.2f - 16) / 2.0f) - 1,
-            20,
-            WHITE
-    );
+        float x_offset = x_pos + ((sc_width * FRAME_HALF_WIDTH - FRAME_ICON_SIZE) / 2.0f);
+        {
+            Sprite::HEART->Draw(
+                    x_offset - 5,
+                    (y_pos + (sc_height * FRAME_HEIGHT - FRAME_ICON_SIZE) / 2.0f),
+                    FRAME_ICON_SIZE, FRAME_ICON_SIZE,
+                    0
+            );
+        }
+        x_offset += FRAME_ICON_SIZE;
 
-}
+        // append the score to the text display buffer
+        sprintf(text_display, "%d", (int) Game.hearts);
 
-static void draw_score_display(float sc_width, float sc_height) {
-    SpriteSheet::Get()->DrawSprite(
-            sc_width * 0.21f, 0,
-            32, 106,
-            sc_width * 0.58f, sc_height * 0.2f,
-            64, 22,
-            0
-    );
+        DrawText(
+                text_display,
+                (int) x_offset + 8,
+                (int) (y_pos + (sc_height * FRAME_HEIGHT - FRAME_FONT_SIZE) / 2.0f),
+                FRAME_FONT_SIZE,
+                GREEN
+        );
+    }
+    x_pos += sc_width * FRAME_HALF_WIDTH + sc_width * FRAME_PADDING;
 
-    char score_display[1024];
-    sprintf(score_display, "%d", (int) game.score);
+    // middle of the HUD
+    {
+        Sprite::FRAME_FULL->Draw(
+                x_pos, y_pos,
+                sc_width * FRAME_FULL_WIDTH, sc_height * FRAME_HEIGHT,
+                0
+        );
 
-    DrawText(
-            score_display,
-            (int) ((sc_width - (float) MeasureText(score_display, 25)) / 2.0f),
-            (int) ((sc_height * 0.2f - 25) / 2.0f),
-            25,
-            GREEN
-    );
+        // append the score to the text display buffer
+        sprintf(text_display, "%d", (int) Game.score);
+
+        DrawText(
+                text_display,
+                (int) ((sc_width - (float) MeasureText(text_display, FRAME_FONT_SIZE)) / 2.0f),
+                (int) ((sc_height * FRAME_HEIGHT - FRAME_FONT_SIZE) / 2.0f),
+                FRAME_FONT_SIZE,
+                GREEN
+        );
+    }
+    x_pos += sc_width * FRAME_FULL_WIDTH + sc_width * FRAME_PADDING;
+
+    // right side of the HUD
+    {
+        Sprite::FRAME_RIGHT->Draw(
+                x_pos, y_pos,
+                sc_width * FRAME_HALF_WIDTH, sc_height * FRAME_HEIGHT,
+                0
+        );
+
+        float x_offset = x_pos + (sc_width * FRAME_HALF_WIDTH - FRAME_ICON_SIZE) / 2.0f;
+        {
+            Sprite::BOMB->Draw(
+                    x_offset - FRAME_ICON_SIZE + 5,
+                    y_pos + (sc_height * FRAME_HEIGHT - FRAME_ICON_SIZE) / 2.0f,
+                    FRAME_ICON_SIZE, FRAME_ICON_SIZE,
+                    0
+            );
+        }
+        x_offset += FRAME_ICON_SIZE;
+
+        // append the bomb count to the text display buffer
+        sprintf(text_display, "%d", (int) Game.bombs);
+
+        DrawText(
+                text_display,
+                (int) x_offset - 5,
+                (int) (y_pos + (sc_height * FRAME_HEIGHT - FRAME_FONT_SIZE) / 2.0f),
+                FRAME_FONT_SIZE,
+                GREEN
+        );
+    }
 }
 
 void GameScreen::OnShow(float sc_width, float sc_height) {
-    game.score = 0.0f;
-    game.hearts = 1;
-    game.multiplier = 1.0f;
+    Game.score = 0.0f;
+    Game.hearts = 1;
+    Game.multiplier = 1.0f;
 
-    game.player = new Entity((sc_width - 32) / 2.0f, sc_height - 32 * 2, 32, 32);
+    Game.player = new Entity((sc_width - 32) / 2.0f, sc_height - 32 * 2, 32, 32);
     {
-        game.player->AddComponent(new ControllerComponent(150.0f));
-        game.player->AddComponent(new SpriteComponent(
-                {0, 0, 0, 0, 0},
-                {9, 1, 7, 7, 0},
-                {0, 0, 0, 0, 0},
-                {0, 34, 8, 7, 0},
-                {0, 1, 8, 7, 0}
-        ));
+        Game.player->AddComponent(new ControllerComponent(150.0f));
     }
 }
 
 bool GameScreen::OnDraw(float sc_width, float sc_height, float frame_time) {
-    game.score += 1 * game.multiplier * frame_time;
-    game.multiplier += 0.15f * frame_time;
+    Game.score += 1 * Game.multiplier * frame_time;
+    Game.multiplier += 0.15f * frame_time;
 
-    draw_hearts_display(sc_width, sc_height);
-    draw_score_display(sc_width, sc_height);
+    DrawHUD(sc_width, sc_height);
 
-    SpriteSheet::Get()->DrawSprite(
-            sc_width - sc_width * 0.2f, 0,
-            96, 106,
-            sc_width * 0.2f, sc_height * 0.2f,
-            31, 22,
-            0
-    );
-
-    game.player->OnUpdate(sc_width, sc_height, frame_time);
+    Game.player->OnUpdate(sc_width, sc_height, frame_time);
 
     return false;
 }
 
 void GameScreen::OnHide() {
-    delete game.player;
+    delete Game.player;
 }

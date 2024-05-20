@@ -1,6 +1,6 @@
 #include <cstdio>
 
-#include <spritesheet.h>
+#include "sprite/spritesheet.h"
 #include <screen/screen.h>
 
 int main() {

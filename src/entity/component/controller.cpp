@@ -3,7 +3,6 @@
 //
 
 #include "controller.h"
-#include "sprite.h"
 
 #include "../entity.h"
 

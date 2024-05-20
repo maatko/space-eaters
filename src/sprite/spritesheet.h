@@ -5,12 +5,17 @@
 #ifndef SPACE_STRIKE_SPRITESHEET_H
 #define SPACE_STRIKE_SPRITESHEET_H
 
-#include <raylib.h>
 #include <unordered_map>
+
+#include <raylib.h>
+
+#include "sprite.h"
 
 class SpriteSheet {
 private:
     explicit SpriteSheet(const char *texture_path);
+
+    friend class Sprite;
 
 public:
     void DrawSprite(float x, float y,
@@ -25,7 +30,7 @@ private:
 public:
     static void Initialize(const char *path);
 
-    static SpriteSheet* Get();
+    static SpriteSheet *Get();
 
     static void Clean();
 

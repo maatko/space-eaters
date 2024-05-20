@@ -9,13 +9,13 @@
 #include "leaderboard.h"
 
 #include <cstdio>
-#include <spritesheet.h>
+#include "sprite/spritesheet.h"
 
 std::unordered_map<Screen::ID, Screen *> Screen::m_ScreenMap;
 Screen::ID Screen::m_CurrentScreen = Screen::ID::NONE;
 
 bool Screen::Button(const char *text, float x, float y, float width, float height, float font_size) {
-    SpriteSheet::Get()->DrawSprite(x, y, 32, 106, width, height, 64, 22, 0);
+    Sprite::FRAME_FULL->Draw(x, y, width, height, 0);
 
     bool hovered = CheckCollisionPointRec(GetMousePosition(), {x, y, width, height});
 
