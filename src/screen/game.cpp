@@ -9,6 +9,7 @@
 
 #include <entity/entity.h>
 #include <entity/component/controller.h>
+#include <entity/component/render.h>
 
 static const float FRAME_PADDING = 0.01f;
 static const float FRAME_HEIGHT = 0.2f;
@@ -126,6 +127,11 @@ void GameScreen::OnShow(float sc_width, float sc_height) {
     Game.player = new Entity((sc_width - 32) / 2.0f, sc_height - 32 * 2, 32, 32);
     {
         Game.player->AddComponent(new ControllerComponent(150.0f));
+        Game.player->AddComponent(new RenderComponent(
+                Sprite::PLAYER_LEFT,
+                Sprite::PLAYER_RIGHT,
+                Sprite::PLAYER_STILL
+        ));
     }
 }
 

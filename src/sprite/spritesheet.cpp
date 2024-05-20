@@ -37,6 +37,10 @@ void SpriteSheet::Clean() {
     delete Sprite::FRAME_FULL;
     delete Sprite::FRAME_RIGHT;
 
+    delete Sprite::PLAYER_LEFT;
+    delete Sprite::PLAYER_RIGHT;
+    delete Sprite::PLAYER_STILL;
+
     delete m_SpriteSheet;
 }
 

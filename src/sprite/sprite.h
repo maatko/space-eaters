@@ -33,6 +33,10 @@ public:
     static const Sprite *FRAME_LEFT;
     static const Sprite *FRAME_FULL;
     static const Sprite *FRAME_RIGHT;
+
+    static const Sprite *PLAYER_LEFT;
+    static const Sprite *PLAYER_RIGHT;
+    static const Sprite *PLAYER_STILL;
 };
 
 #endif //SPACE_EATERS_SPRITE_H

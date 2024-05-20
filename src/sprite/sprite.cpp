@@ -12,6 +12,10 @@ const Sprite *Sprite::FRAME_LEFT = new Sprite(1, 106, 31, 22);
 const Sprite *Sprite::FRAME_FULL = new Sprite(32, 106, 64, 22);
 const Sprite *Sprite::FRAME_RIGHT = new Sprite(96, 106, 31, 22);
 
+const Sprite *Sprite::PLAYER_LEFT = new Sprite(9, 1, 7, 7);
+const Sprite *Sprite::PLAYER_RIGHT = new Sprite(0, 34, 8, 7);
+const Sprite *Sprite::PLAYER_STILL = new Sprite(0, 1, 8, 7);
+
 Sprite::Sprite(float u, float v, float width, float height) {
     m_PositionX = u;
     m_PositionY = v;
