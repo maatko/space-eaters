@@ -2,8 +2,10 @@
 #define SPACE_EATERS_SCREEN_H
 
 #include <unordered_map>
+#include <vector>
 
 #include <raylib.h>
+#include <entity/entity.h>
 
 class Screen {
 public:
@@ -24,6 +26,12 @@ protected:
 
     virtual void OnHide() {
     }
+
+protected:
+    void SpawnStars(float sc_width);
+
+protected:
+    std::vector<Entity *> m_Entities;
 
 protected:
     static bool Button(const char *text, float x, float y, float width, float height, float font_size);

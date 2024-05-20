@@ -1,20 +1,19 @@
-#include <cstdio>
-
 #include "sprite/spritesheet.h"
+
 #include <screen/screen.h>
 
 int main() {
-    // initialize the screen system before
-    // the window is set up
-    Screen::Initialize(Screen::ID::MENU);
-
     SetConfigFlags(FLAG_VSYNC_HINT);
-
     InitWindow(640, 480, "Space Eaters");
 
     // initialize the sprite sheet so
     // sprites can be rendered from it
     SpriteSheet::Initialize("./assets/images/spritesheet.png");
+
+    // initialize the screen system
+    // so the screens can be switched
+    // (it starts on the menu screen)
+    Screen::Initialize(Screen::ID::MENU);
 
     while (!WindowShouldClose()) {
         BeginDrawing();

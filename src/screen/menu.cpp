@@ -54,3 +54,7 @@ bool MenuScreen::OnDraw(float sc_width, float sc_height, float frame_time) {
 
     return Button("Quit", pos_x, pos_y, BUTTON_WIDTH, BUTTON_HEIGHT, BUTTON_TEXT_SIZE);
 }
+
+void MenuScreen::OnShow(float sc_width, float sc_height) {
+    SpawnStars(sc_width);
+}

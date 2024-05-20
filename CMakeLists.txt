@@ -28,6 +28,10 @@ add_executable(
         src/sprite/sprite.h
         src/entity/component/render.cpp
         src/entity/component/render.h
+        src/entity/component/gravity.cpp
+        src/entity/component/gravity.h
+        src/entity/component/particle.cpp
+        src/entity/component/particle.h
 )
 
 # link raylib with the project

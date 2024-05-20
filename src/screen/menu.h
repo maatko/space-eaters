@@ -5,6 +5,8 @@
 
 class MenuScreen : public Screen {
 protected:
+    void OnShow(float sc_width, float sc_height) override;
+
     bool OnDraw(float sc_width, float sc_height, float frame_time) override;
 };
 

@@ -37,6 +37,8 @@ public:
     static const Sprite *PLAYER_LEFT;
     static const Sprite *PLAYER_RIGHT;
     static const Sprite *PLAYER_STILL;
+
+    static const Sprite *STAR;
 };
 
 #endif //SPACE_EATERS_SPRITE_H

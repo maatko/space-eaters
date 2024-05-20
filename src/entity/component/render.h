@@ -1,7 +1,3 @@
-//
-// Created by mat on 5/20/2024.
-//
-
 #ifndef SPACE_EATERS_RENDER_H
 #define SPACE_EATERS_RENDER_H
 

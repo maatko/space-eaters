@@ -16,6 +16,8 @@ const Sprite *Sprite::PLAYER_LEFT = new Sprite(9, 1, 7, 7);
 const Sprite *Sprite::PLAYER_RIGHT = new Sprite(0, 34, 8, 7);
 const Sprite *Sprite::PLAYER_STILL = new Sprite(0, 1, 8, 7);
 
+const Sprite *Sprite::STAR = new Sprite(2, 88, 3, 3);
+
 Sprite::Sprite(float u, float v, float width, float height) {
     m_PositionX = u;
     m_PositionY = v;

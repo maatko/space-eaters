@@ -124,6 +124,8 @@ void GameScreen::OnShow(float sc_width, float sc_height) {
     Game.hearts = 1;
     Game.multiplier = 1.0f;
 
+    SpawnStars(sc_width);
+
     Game.player = new Entity((sc_width - 32) / 2.0f, sc_height - 32 * 2, 32, 32);
     {
         Game.player->AddComponent(new ControllerComponent(150.0f));
@@ -133,6 +135,8 @@ void GameScreen::OnShow(float sc_width, float sc_height) {
                 Sprite::PLAYER_STILL
         ));
     }
+
+    m_Entities.push_back(Game.player);
 }
 
 bool GameScreen::OnDraw(float sc_width, float sc_height, float frame_time) {
@@ -140,8 +144,6 @@ bool GameScreen::OnDraw(float sc_width, float sc_height, float frame_time) {
     Game.multiplier += 0.15f * frame_time;
 
     DrawHUD(sc_width, sc_height);
-
-    Game.player->OnUpdate(sc_width, sc_height, frame_time);
 
     return false;
 }

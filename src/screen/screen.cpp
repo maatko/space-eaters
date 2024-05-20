@@ -7,12 +7,30 @@
 #include "menu.h"
 #include "game.h"
 #include "leaderboard.h"
+#include "sprite/spritesheet.h"
 
 #include <cstdio>
-#include "sprite/spritesheet.h"
+#include <time.h>
+#include <random>
+
+#include <entity/component/gravity.h>
+#include <entity/component/particle.h>
 
 std::unordered_map<Screen::ID, Screen *> Screen::m_ScreenMap;
 Screen::ID Screen::m_CurrentScreen = Screen::ID::NONE;
+
+void Screen::SpawnStars(float sc_width) {
+    srand(time(nullptr));
+
+    for (int i = 0; i < (int) (sc_width / 3.0f); i++) {
+        auto *star_entity = new Entity(i * 5, 0, 3, 3);
+        {
+            star_entity->AddComponent(new GravityComponent((rand() / (float) RAND_MAX) * 150));
+            star_entity->AddComponent(new ParticleComponent(Sprite::STAR));
+        }
+        m_Entities.push_back(star_entity);
+    }
+}
 
 bool Screen::Button(const char *text, float x, float y, float width, float height, float font_size) {
     Sprite::FRAME_FULL->Draw(x, y, width, height, 0);
@@ -30,7 +48,12 @@ bool Screen::Button(const char *text, float x, float y, float width, float heigh
 }
 
 bool Screen::Draw(float sc_width, float sc_height, float frame_time) {
-    return m_ScreenMap[m_CurrentScreen]->OnDraw(sc_width, sc_height, frame_time);
+    auto screen = m_ScreenMap[m_CurrentScreen];
+    for (const auto entity: screen->m_Entities) {
+        entity->OnUpdate(sc_width, sc_height, frame_time);
+    }
+
+    return screen->OnDraw(sc_width, sc_height, frame_time);
 }
 
 void Screen::Initialize(const Screen::ID screen_id) {
@@ -43,6 +66,15 @@ void Screen::Initialize(const Screen::ID screen_id) {
 
 void Screen::Show(Screen::ID screen_id) {
     if (m_CurrentScreen != Screen::ID::NONE) {
+        auto screen = m_ScreenMap[m_CurrentScreen];
+
+        // make sure to clear all the entities
+        // for each screen that is closed
+        for (const auto entity: screen->m_Entities) {
+            delete entity;
+        }
+        screen->m_Entities.clear();
+
         m_ScreenMap[m_CurrentScreen]->OnHide();
     }
 
