@@ -1,9 +1,12 @@
 #ifndef SPACE_EATERS_COMPONENT_H
 #define SPACE_EATERS_COMPONENT_H
 
+#include <vector>
 #include <raylib.h>
 
 class Entity;
+
+class Screen;
 
 class Component {
 protected:
@@ -11,6 +14,7 @@ protected:
 
 protected:
     Entity *m_Entity = nullptr;
+    Screen *m_Screen = nullptr;
 
     float *m_EntityPositionX = nullptr;
     float *m_EntityPositionY = nullptr;

@@ -11,6 +11,8 @@ public:
 
     ~Entity();
 
+    friend class Screen;
+
 public:
     void OnUpdate(float sc_width, float sc_height, float frame_time);
 
@@ -29,6 +31,8 @@ public:
     }
 
 protected:
+    Screen *m_Screen = nullptr;
+
     float m_PositionX;
     float m_PositionY;
 

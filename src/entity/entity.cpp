@@ -15,6 +15,7 @@ Entity::~Entity() {
     for (const auto &item: m_Components) {
         delete item;
     }
+    m_Components.clear();
 }
 
 void Entity::AddComponent(Component *component) {
@@ -24,6 +25,7 @@ void Entity::AddComponent(Component *component) {
     component->m_EntityWidth = &m_Width;
     component->m_EntityHeight = &m_Height;
 
+    component->m_Screen = m_Screen;
     component->m_Entity = this;
 
     m_Components.push_back(component);

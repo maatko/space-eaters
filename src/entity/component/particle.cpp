@@ -14,8 +14,4 @@ void ParticleComponent::OnUpdate(float sc_width, float sc_height, float frame_ti
             *m_EntityWidth, *m_EntityHeight,
             0
     );
-
-    if ((*m_EntityPositionY) + (*m_EntityHeight) >= sc_height) {
-        *m_EntityPositionY = 0;
-    }
 }

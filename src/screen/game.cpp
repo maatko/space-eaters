@@ -127,6 +127,9 @@ void GameScreen::OnShow(float sc_width, float sc_height) {
     SpawnStars(sc_width);
 
     Game.player = new Entity((sc_width - 32) / 2.0f, sc_height - 32 * 2, 32, 32);
+
+    AddEntity(Game.player);
+
     {
         Game.player->AddComponent(new ControllerComponent(150.0f));
         Game.player->AddComponent(new RenderComponent(
@@ -135,8 +138,6 @@ void GameScreen::OnShow(float sc_width, float sc_height) {
                 Sprite::PLAYER_STILL
         ));
     }
-
-    m_Entities.push_back(Game.player);
 }
 
 bool GameScreen::OnDraw(float sc_width, float sc_height, float frame_time) {

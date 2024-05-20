@@ -38,6 +38,7 @@ public:
     static const Sprite *PLAYER_RIGHT;
     static const Sprite *PLAYER_STILL;
 
+    static const Sprite *BULLET;
     static const Sprite *STAR;
 };
 

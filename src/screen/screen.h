@@ -27,12 +27,16 @@ protected:
     virtual void OnHide() {
     }
 
+public:
+    void AddEntity(Entity *entity);
+
+    void RemoveEntity(Entity *entity);
+
 protected:
     void SpawnStars(float sc_width);
 
-protected:
+private:
     std::vector<Entity *> m_Entities;
-
 protected:
     static bool Button(const char *text, float x, float y, float width, float height, float font_size);
 

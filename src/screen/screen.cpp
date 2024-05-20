@@ -10,8 +10,8 @@
 #include "sprite/spritesheet.h"
 
 #include <cstdio>
-#include <time.h>
-#include <random>
+#include <ctime>
+#include <algorithm>
 
 #include <entity/component/gravity.h>
 #include <entity/component/particle.h>
@@ -19,16 +19,28 @@
 std::unordered_map<Screen::ID, Screen *> Screen::m_ScreenMap;
 Screen::ID Screen::m_CurrentScreen = Screen::ID::NONE;
 
+void Screen::AddEntity(Entity *entity) {
+    entity->m_Screen = this;
+
+    m_Entities.push_back(entity);
+}
+
+void Screen::RemoveEntity(Entity *entity) {
+    m_Entities.erase(std::remove(m_Entities.begin(), m_Entities.end(), entity), m_Entities.end());
+    delete entity;
+}
+
 void Screen::SpawnStars(float sc_width) {
     srand(time(nullptr));
 
     for (int i = 0; i < (int) (sc_width / 3.0f); i++) {
         auto *star_entity = new Entity(i * 5, 0, 3, 3);
+
+        AddEntity(star_entity);
         {
-            star_entity->AddComponent(new GravityComponent((rand() / (float) RAND_MAX) * 150));
+            star_entity->AddComponent(new GravityComponent((rand() / (float) RAND_MAX) * 150, true));
             star_entity->AddComponent(new ParticleComponent(Sprite::STAR));
         }
-        m_Entities.push_back(star_entity);
     }
 }
 

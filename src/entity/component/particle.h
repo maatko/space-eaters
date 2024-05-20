@@ -11,7 +11,7 @@
 
 class ParticleComponent : public Component {
 public:
-    ParticleComponent(const Sprite *sprite);
+    explicit ParticleComponent(const Sprite *sprite);
 
 protected:
     void OnUpdate(float sc_width, float sc_height, float frame_time) override;

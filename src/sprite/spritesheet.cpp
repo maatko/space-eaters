@@ -41,6 +41,7 @@ void SpriteSheet::Clean() {
     delete Sprite::PLAYER_RIGHT;
     delete Sprite::PLAYER_STILL;
 
+    delete Sprite::BULLET;
     delete Sprite::STAR;
 
     delete m_SpriteSheet;
