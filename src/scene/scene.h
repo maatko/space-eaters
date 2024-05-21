@@ -1,0 +1,6 @@
+
+
+#ifndef SPACE_EATERS_SCENE_H
+#define SPACE_EATERS_SCENE_H
+
+#endif //SPACE_EATERS_SCENE_H
