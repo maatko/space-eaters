@@ -1,5 +1,6 @@
 #include "scene.h"
 
+#include <assert.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
@@ -19,6 +20,7 @@ struct
 
     float player_speed;
     float star_speed;
+    float enemy_speed;
 } statistics;
 
 static void on_show(float screen_width, float screen_height)
@@ -27,11 +29,12 @@ static void on_show(float screen_width, float screen_height)
 
     // reset all the statistics
     statistics.score = 0;
-    statistics.hearts = 0;
+    statistics.hearts = 1;
     statistics.bombs = 0;
 
-    statistics.player_speed = 250.0f;
+    statistics.player_speed = 350.0f;
     statistics.star_speed = 150.0f;
+    statistics.enemy_speed = statistics.player_speed / 2.0f;
 
     const sprite_t* star_sprite = &spritesheet.sprites.star;
     {
@@ -150,6 +153,31 @@ static bool on_update(float screen_width, float screen_height, float frame_time)
             GREEN
         );
     }
+
+    static float spawn_timer = 0.0f;
+    if (spawn_timer >= 2.0f)
+    {
+        static const float enemy_width = PLAYER_WIDTH / 1.5f;
+        static const float enemy_height = PLAYER_HEIGHT / 1.5f;
+
+        entity_t* enemy = entity_add((rand() / (float) RAND_MAX) * (screen_width - (enemy_width * 1.5f)), frame_height - enemy_height, enemy_width, enemy_height);
+        {
+            swerve_t* swerve = (swerve_t*) malloc(sizeof(swerve_t));
+            assert(swerve != NULL);
+
+            swerve->speed = 150.0f;
+            swerve->flip = false;
+
+            entity_component_add(enemy, render_component, (void*)&spritesheet.sprites.enemy_yellow);
+            entity_component_add(enemy, gravity_component, (void*)&statistics.enemy_speed);
+            entity_component_add(enemy, swerve_component, (void*)enemy);
+
+            enemy->data = (void*) swerve;
+            enemy->enemy = true;
+        }
+        spawn_timer = 0;
+    }
+    spawn_timer += 0.5f * frame_time;
 
     return false;
 }

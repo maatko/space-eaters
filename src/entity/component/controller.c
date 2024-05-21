@@ -8,11 +8,6 @@ void controller_component(entity_t* entity, void* component_data, float screen_w
 {
     float movement_speed = (*(float*)component_data) * frame_time;
     {
-        if (IsKeyDown(KEY_UP))
-            entity->pos_y -= movement_speed;
-        if (IsKeyDown(KEY_DOWN))
-            entity->pos_y += movement_speed;
-
         if (IsKeyDown(KEY_LEFT))
             entity->pos_x -= movement_speed;
         if (IsKeyDown(KEY_RIGHT))
@@ -35,6 +30,7 @@ void controller_component(entity_t* entity, void* component_data, float screen_w
             {
                 entity_component_add(bullet, render_component, (void*)bullet_sprite);
                 entity_component_add(bullet, gravity_component, (void*)&bullet_speed);
+                entity_component_add(bullet, collision_component, NULL);
             }
         }
     }

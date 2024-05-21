@@ -28,6 +28,7 @@ typedef struct
         const sprite_t bomb;
         const sprite_t bullet;
         const sprite_t star;
+        const sprite_t explode;
     } sprites;
 
     Texture2D texture;

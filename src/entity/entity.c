@@ -5,6 +5,11 @@
 
 static entity_t* entities = NULL;
 
+entity_t* entity_list()
+{
+    return entities;
+}
+
 entity_t* entity_add(float x, float y, float width, float height)
 {
     entity_t* entity = (entity_t*)malloc(sizeof(entity_t));
@@ -12,6 +17,7 @@ entity_t* entity_add(float x, float y, float width, float height)
 
     {
         entity->component_count = 0;
+        entity->data = NULL;
 
         entity->pos_x = x;
         entity->pos_y = y;
@@ -91,6 +97,9 @@ void entity_delete(entity_t* entity)
         entity->previous->next = entity->next;
 
     entity->component_count = 0;
+
+    if (entity->data != NULL)
+        free(entity->data);
     
     free(entity);
     entity = NULL;
@@ -106,6 +115,9 @@ void entity_free()
             it = it->next;
 
             temp->component_count = 0;
+
+            if (temp->data != NULL)
+                free(temp->data);
 
             free(temp);
         }

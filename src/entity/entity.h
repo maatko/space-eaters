@@ -2,6 +2,7 @@
 #define ENTITY_D
 
 #include <stdint.h>
+#include <stdbool.h>
 
 #include <sprite/spritesheet.h>
 
@@ -18,11 +19,19 @@ typedef struct entity_t
     float width;
     float height;
 
+    bool enemy;
+
+    // any data that needs to be
+    // tracked between components
+    void* data;
+
     // location where to entity is
     // located in the linked list
     struct entity_t* previous;
     struct entity_t* next;
 } entity_t;
+
+entity_t* entity_list();
 
 entity_t* entity_add(float x, float y, float width, float height);
 

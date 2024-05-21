@@ -16,7 +16,8 @@ spritesheet_t spritesheet = {
         .heart          = { 51, 20, 8, 7    },
         .bomb           = { 121, 9, 6, 7    },
         .bullet         = { 19, 52, 2, 3    },
-        .star           = { 2, 88, 3, 3     }
+        .star           = { 2, 88, 3, 3     },
+        .explode        = { 16, 65, 8, 8    }
     }
 };
 
