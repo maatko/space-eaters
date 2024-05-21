@@ -16,7 +16,7 @@ typedef struct {
     on_hide_t on_hide;
 } scene_t;
 
-void scene_show(scene_t* scene);
+bool scene_show(scene_t* scene);
 bool scene_update(float screen_width, float screen_height, float frame_time);
 bool scene_button(const char* text, float x, float y, float width, float height, int font_size);
 void scene_free();

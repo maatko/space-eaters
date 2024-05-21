@@ -9,6 +9,10 @@ int main(void) {
 
     InitWindow(640, 480, "Space Eaters");
     {
+        // make it so the `ESCAPE` key does
+        // not exit the application
+        SetExitKey(KEY_NULL);
+
         spritesheet_load("./assets/textures/spritesheet.png");
 
         scene_show(&menu_scene);

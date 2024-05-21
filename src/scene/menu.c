@@ -3,6 +3,8 @@
 #include <stdio.h>
 #include <math.h>
 
+#include <entity/entity.h>
+
 #define BUTTON_WIDTH 200
 #define BUTTON_HEIGHT 50
 #define PADDING 20
@@ -45,10 +47,8 @@ static bool on_update(float screen_width, float screen_height, float frame_time)
     DrawText("SpaceEaters was made whilst studying @ FERIT (2024)", 20, screen_height - 35, 15, GREEN);
 
     if (scene_button("Play", pos_x, pos_y, BUTTON_WIDTH, BUTTON_HEIGHT, 20))
-    {
-        scene_show(&game_scene);
-        return false;
-    }
+        return scene_show(&game_scene);
+
     pos_y += BUTTON_HEIGHT + PADDING;
 
     return scene_button("Quit", pos_x, pos_y, BUTTON_WIDTH, BUTTON_HEIGHT, 20);

@@ -3,17 +3,23 @@
 #include <stdio.h>
 #include <raylib.h>
 
+#include <entity/entity.h>
+
 static scene_t* current_scene = NULL;
 
-void scene_show(scene_t* scene)
+bool scene_show(scene_t* scene)
 {
     if (current_scene != NULL && current_scene->on_hide != NULL)
         current_scene->on_hide();
 
+    entity_free();
+
     if (scene->on_show != NULL && scene->on_show != NULL)
         scene->on_show(GetScreenWidth(), GetScreenHeight());
 
-    current_scene = scene;    
+    current_scene = scene;
+
+    return false; 
 }
 
 bool scene_update(float screen_width, float screen_height, float frame_time)
