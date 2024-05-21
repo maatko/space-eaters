@@ -7,10 +7,6 @@
 #define BUTTON_HEIGHT 50
 #define BUTTON_PADDING 20
 
-static void on_show(float screen_width, float screen_height) 
-{
-}
-
 static bool on_update(float screen_width, float screen_height, float frame_time)
 {
     float pos_x = (screen_width - BUTTON_WIDTH) / 2.0f;
@@ -34,11 +30,6 @@ static bool on_update(float screen_width, float screen_height, float frame_time)
 
             float animation = (float) 1.5f - fabs(sin((double) GetTime()));
 
-            char anim[1024];
-            sprintf(anim, "%lf", animation);
-
-            DrawText(anim, 100, 100, 20, WHITE);
-
             spritesheet_draw(
                 &logo_sprite, 
                 (screen_width + boss_width - logo_width) / 2.0f, 
@@ -51,6 +42,8 @@ static bool on_update(float screen_width, float screen_height, float frame_time)
         pos_y += BUTTON_PADDING * 3;
     }
 
+    DrawText("SpaceEaters was made whilst studying @ FERIT", 20, screen_height - 35, 15, GREEN);
+
     if (scene_button("Play", pos_x, pos_y, BUTTON_WIDTH, BUTTON_HEIGHT, 20))
     {
         return false;
@@ -60,12 +53,8 @@ static bool on_update(float screen_width, float screen_height, float frame_time)
     return scene_button("Quit", pos_x, pos_y, BUTTON_WIDTH, BUTTON_HEIGHT, 20);
 }
 
-static void on_hide()
-{
-}
-
 scene_t menu_scene = {
-    .on_show    = on_show,
+    .on_show    = NULL,
     .on_update  = on_update,
-    .on_hide    = on_hide
+    .on_hide    = NULL
 };

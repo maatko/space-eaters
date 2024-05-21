@@ -10,7 +10,8 @@ void scene_show(scene_t* scene)
     if (current_scene != NULL)
         current_scene->on_hide();
 
-    scene->on_show(GetScreenWidth(), GetScreenHeight());
+    if (scene->on_show != NULL)
+        scene->on_show(GetScreenWidth(), GetScreenHeight());
 
     current_scene = scene;    
 }
@@ -45,6 +46,8 @@ void scene_free()
     if (current_scene == NULL)
         return;
     
-    current_scene->on_hide();
+    if (current_scene->on_hide != NULL)
+        current_scene->on_hide();
+
     current_scene = NULL;
 }
