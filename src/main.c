@@ -11,10 +11,6 @@ int main(void) {
     {
         spritesheet_load("./assets/textures/spritesheet.png");
 
-        entity_t* player = entity_add(100, 100, 32, 32);
-        entity_component_add(player, render_component, (void*)&spritesheet.sprites.player_still);
-        entity_component_add(player, controller_component, NULL);
-
         scene_show(&menu_scene);
         {
             while (!WindowShouldClose())

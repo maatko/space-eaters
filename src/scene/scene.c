@@ -7,10 +7,10 @@ static scene_t* current_scene = NULL;
 
 void scene_show(scene_t* scene)
 {
-    if (current_scene != NULL)
+    if (current_scene != NULL && current_scene->on_hide != NULL)
         current_scene->on_hide();
 
-    if (scene->on_show != NULL)
+    if (scene->on_show != NULL && scene->on_show != NULL)
         scene->on_show(GetScreenWidth(), GetScreenHeight());
 
     current_scene = scene;    
@@ -19,7 +19,7 @@ void scene_show(scene_t* scene)
 bool scene_update(float screen_width, float screen_height, float frame_time)
 {
     if (current_scene == NULL)
-        return;  
+        return false;
     
     return current_scene->on_update(screen_width, screen_height, frame_time);
 }

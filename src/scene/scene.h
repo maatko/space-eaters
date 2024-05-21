@@ -22,5 +22,6 @@ bool scene_button(const char* text, float x, float y, float width, float height,
 void scene_free();
 
 extern scene_t menu_scene;
+extern scene_t game_scene;
 
 #endif //SCENE_H

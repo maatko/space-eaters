@@ -5,10 +5,6 @@
 
 static entity_t* entities = NULL;
 
-#define MAX_QUEUE_SIZE 1024
-static entity_t queue[MAX_QUEUE_SIZE];
-static int queue_count = 0;
-
 entity_t* entity_add(float x, float y, float width, float height)
 {
     entity_t* entity = (entity_t*)malloc(sizeof(entity_t));
@@ -102,17 +98,22 @@ void entity_delete(entity_t* entity)
     entity->component_count = 0;
     
     free(entity);
+    entity = NULL;
 }
 
 void entity_free()
 {
     entity_t* it = entities;
-    while(it != NULL)
     {
-        entity_t* temp = it;
-        it = temp->next;
+        while(it != NULL)
+        {
+            entity_t* temp = it;
+            it = it->next;
 
-        temp->component_count = 0;
-        free(temp);
+            temp->component_count = 0;
+
+            free(temp);
+        }
     }
+    entities = NULL;
 }

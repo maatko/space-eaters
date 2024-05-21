@@ -46,6 +46,7 @@ static bool on_update(float screen_width, float screen_height, float frame_time)
 
     if (scene_button("Play", pos_x, pos_y, BUTTON_WIDTH, BUTTON_HEIGHT, 20))
     {
+        scene_show(&game_scene);
         return false;
     }
     pos_y += BUTTON_HEIGHT + PADDING;
