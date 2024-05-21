@@ -1,5 +1,6 @@
 #include "component.h"
 
+#include <data.h>
 #include <entity/entity.h>
 
 #define PADDING 5
@@ -16,6 +17,9 @@ void collision_component(entity_t* entity, void* component_data, float screen_wi
 
             if (CheckCollisionRecs(target, bullet))
             {
+                if (data.collision_callback != NULL)
+                    data.collision_callback(entity, it);
+
                 entity_delete(entity);
                 entity_delete(it);
 

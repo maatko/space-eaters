@@ -35,4 +35,6 @@ extern void confetti_component(struct entity_t* entity, void* component_data, fl
 extern void swerve_component(struct entity_t* entity, void* component_data, float screen_width, float screen_height, float frame_time);
 extern void collision_component(struct entity_t* entity, void* component_data, float screen_width, float screen_height, float frame_time);
 
+typedef void (*collision_callback)(struct entity_t* entity, struct entity_t* target);
+
 #endif //ENTITY_COMPONENT_D

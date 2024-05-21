@@ -1,8 +1,11 @@
 #include <raylib.h>
 
+#include <data.h>
 #include <scene/scene.h>
 #include <sprite/spritesheet.h>
 #include <entity/entity.h>
+
+data_t data;
 
 int main(void) {
     SetConfigFlags(FLAG_VSYNC_HINT);
