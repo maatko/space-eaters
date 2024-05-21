@@ -86,7 +86,8 @@ void entity_delete(entity_t* entity)
     if (entity == NULL)
         return;
 
-    if (entities == entity) {
+    if (entities == entity)
+    {
         entities = entity->next;
 
         entities->previous = NULL;
@@ -110,6 +111,8 @@ void entity_free()
     {
         entity_t* temp = it;
         it = temp->next;
+
+        temp->component_count = 0;
         free(temp);
     }
 }
