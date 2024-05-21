@@ -27,7 +27,7 @@ void spritesheet_load(const char* path)
     spritesheet.texture = texture;
 }
 
-void spritesheet_draw(sprite_t* sprite, float x, float y, float width, float height, float rotation)
+void spritesheet_draw(const sprite_t* sprite, float x, float y, float width, float height, float rotation)
 {
     DrawTexturePro(
         spritesheet.texture,
