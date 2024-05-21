@@ -1,8 +1,8 @@
 cmake_minimum_required(VERSION 3.28)
 project(space-eaters CXX)
 
-# C++ language version
-set(CMAKE_CXX_STANDARD 17)
+# C language version
+set(CMAKE_C_STANDARD 99)
 
 # set up the source directory for the project
 set(PROJECT_SOURCE_DIR ${CMAKE_SOURCE_DIR}/src)
@@ -13,26 +13,11 @@ set(BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
 # include raylib
 add_subdirectory(vendor/raylib)
 
+# get all the source files
+file(GLOB_RECURSE SOURCE_LIST "./src/*.c" "./src/*.h")
+
 # create the executable
-add_executable(
-        ${PROJECT_NAME}
-        src/main.cpp src/sprite/spritesheet.h src/sprite/spritesheet.cpp
-        src/screen/screen.cpp src/screen/screen.h
-        src/screen/menu.cpp src/screen/menu.h
-        src/screen/game.cpp src/screen/game.h
-        src/screen/leaderboard.cpp src/screen/leaderboard.h
-        src/entity/entity.cpp src/entity/entity.h
-        src/entity/component/controller.cpp src/entity/component/controller.h
-        src/entity/component/component.h
-        src/sprite/sprite.cpp
-        src/sprite/sprite.h
-        src/entity/component/render.cpp
-        src/entity/component/render.h
-        src/entity/component/gravity.cpp
-        src/entity/component/gravity.h
-        src/entity/component/particle.cpp
-        src/entity/component/particle.h
-)
+add_executable(${PROJECT_NAME} ${SOURCE_LIST})
 
 # link raylib with the project
 target_link_libraries(${PROJECT_NAME} raylib)
