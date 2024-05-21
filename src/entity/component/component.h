@@ -12,7 +12,8 @@ typedef struct component_t
     on_component_update on_update;
 } component_t;
 
-extern void render_sprite_component(struct entity_t* entity, void* component_data, float screen_width, float screen_height, float frame_time);
+extern void render_component(struct entity_t* entity, void* component_data, float screen_width, float screen_height, float frame_time);
 extern void controller_component(struct entity_t* entity, void* component_data, float screen_width, float screen_height, float frame_time);
+extern void gravity_component(struct entity_t* entity, void* component_data, float screen_width, float screen_height, float frame_time);
 
 #endif //ENTITY_COMPONENT_D
