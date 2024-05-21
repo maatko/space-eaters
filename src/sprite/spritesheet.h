@@ -18,6 +18,10 @@ typedef struct
         const sprite_t player_still;
         const sprite_t player_right;
 
+        const sprite_t enemy_green;
+        const sprite_t enemy_red;
+        const sprite_t enemy_yellow;
+
         const sprite_t boss;
 
         const sprite_t heart;

@@ -4,6 +4,7 @@
 #include <stdint.h>
 
 #include <sprite/spritesheet.h>
+
 #include "component/component.h"
 
 typedef struct entity_t

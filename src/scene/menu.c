@@ -1,7 +1,10 @@
 #include "scene.h"
 
+#include <assert.h>
+#include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
+#include <time.h>
 
 #include <entity/entity.h>
 
@@ -9,8 +12,46 @@
 #define BUTTON_HEIGHT 50
 #define PADDING 20
 
+static void on_show(float screen_width, float screen_height)
+{
+    srand((unsigned int)time(NULL));
+}
+
 static bool on_update(float screen_width, float screen_height, float frame_time)
 {
+    static float time = 0.0f;
+    static float last_time = 0;
+
+    if (time >= last_time)
+    {
+        static const float STAR_WIDTH = 3;
+        static const float STAR_HEIGHT = 3;
+        static const float STAR_PADDING = 10;
+
+        // generates a random position on
+        // the screen that can fit a star
+        float pos_x = STAR_PADDING + (rand() / (float) RAND_MAX) * (screen_width - STAR_WIDTH - STAR_PADDING);
+        float pos_y = STAR_PADDING + (rand() / (float) RAND_MAX) * (screen_height - STAR_HEIGHT - STAR_PADDING);
+
+        entity_t* star = entity_add(pos_x, pos_y, STAR_WIDTH, STAR_HEIGHT);
+        {
+            confetti_t* confetti = (confetti_t*) malloc(sizeof(confetti_t));
+            assert(confetti != NULL);
+
+            confetti->scale = 0.0f;
+            confetti->max_scale = 0.05f;
+            confetti->speed = 0.05f;
+            confetti->flip = false;
+
+            entity_component_add(star, render_component, (void*)&spritesheet.sprites.star);
+            entity_component_add(star, confetti_component, (void*)confetti);
+        }
+
+        time = 0;
+        last_time = (rand() / (float) RAND_MAX) * 0.1f;
+    }
+    time += 1.0f * frame_time;
+
     float pos_x = (screen_width - BUTTON_WIDTH) / 2.0f;
     float pos_y = (screen_height - (BUTTON_HEIGHT + PADDING) * 2) / 2.0f;
 
@@ -54,8 +95,9 @@ static bool on_update(float screen_width, float screen_height, float frame_time)
     return scene_button("Quit", pos_x, pos_y, BUTTON_WIDTH, BUTTON_HEIGHT, 20);
 }
 
-scene_t menu_scene = {
-    .on_show    = NULL,
+scene_t menu_scene =
+{
+    .on_show    = on_show,
     .on_update  = on_update,
     .on_hide    = NULL
 };

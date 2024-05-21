@@ -83,12 +83,7 @@ void entity_delete(entity_t* entity)
         return;
 
     if (entities == entity)
-    {
         entities = entity->next;
-
-        entities->previous = NULL;
-        entities->next = NULL;
-    }
     
     if (entity->next != NULL)
         entity->next->previous = entity->previous;
