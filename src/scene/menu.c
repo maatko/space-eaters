@@ -48,7 +48,7 @@ static bool on_update(float screen_width, float screen_height, float frame_time)
         }
 
         time = 0;
-        last_time = (rand() / (float) RAND_MAX) * 0.1f;
+        last_time = (rand() / (float) RAND_MAX) * 0.05f;
     }
     time += 1.0f * frame_time;
 

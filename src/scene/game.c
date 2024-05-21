@@ -84,9 +84,25 @@ static bool on_update(float screen_width, float screen_height, float frame_time)
     spritesheet_draw(&spritesheet.sprites.frame_left, 0, 0, side_frame_width, frame_height, 0);
     {
         sprintf(info_display, "%d", statistics.hearts);
+        const float display_width = (float) MeasureText(info_display, info_font_size);
+
+        const sprite_t* heart_sprite = &spritesheet.sprites.heart;
+        
+        const float heart_width = heart_sprite->width * 3.0f; 
+        const float heart_height = heart_sprite->height * 3.0f;
+      
+        spritesheet_draw(
+            heart_sprite,
+            (side_frame_width - heart_width + side_frame_padding) / 2.0f - (heart_width + display_width / 2.0f) / 2.0f,
+            (frame_height - heart_height) / 2.0f,
+            heart_width,
+            heart_height,
+            0
+        );
+
         DrawText(
             info_display,
-            (side_frame_width - MeasureText(info_display, info_font_size) + side_frame_padding) / 2.0f,
+            (side_frame_width - display_width + side_frame_padding) / 2.0f + (heart_width + display_width / 2.0f) / 2.0f,
             (frame_height - info_font_size) / 2.0f,
             info_font_size,
             GREEN
@@ -99,7 +115,7 @@ static bool on_update(float screen_width, float screen_height, float frame_time)
         sprintf(info_display, "%d", (int)statistics.score);
         DrawText(
             info_display,
-            (screen_width - MeasureText(info_display, info_font_size)) / 2.0f,
+            (screen_width - (float) MeasureText(info_display, info_font_size)) / 2.0f,
             (frame_height - info_font_size) / 2.0f,
             info_font_size,
             GREEN
@@ -110,9 +126,25 @@ static bool on_update(float screen_width, float screen_height, float frame_time)
     spritesheet_draw(&spritesheet.sprites.frame_right, side_frame_width + side_frame_padding * 2.0f + full_frame_width, 0, side_frame_width, frame_height, 0);
     {
         sprintf(info_display, "%d", statistics.bombs);
+        const float display_width = (float) MeasureText(info_display, info_font_size);
+
+        const sprite_t* bomb_sprite = &spritesheet.sprites.bomb;
+
+        const float bomb_width = bomb_sprite->width * 3.5f;
+        const float bomb_height = bomb_sprite->height * 3.5f;
+
+        spritesheet_draw(
+            bomb_sprite,
+            screen_width - (side_frame_width + display_width + side_frame_padding) / 2.0f + (bomb_width + display_width / 2.0f) / 2.0f,
+            (frame_height - bomb_height) / 2.0f,
+            bomb_width,
+            bomb_height,
+            0
+        );
+
         DrawText(
             info_display,
-            screen_width - (side_frame_width + MeasureText(info_display, info_font_size) + side_frame_padding) / 2.0f,
+            screen_width - (side_frame_width + display_width + side_frame_padding) / 2.0f - (bomb_width + display_width / 2.0f) / 2.0f,
             (frame_height - info_font_size) / 2.0f,
             info_font_size,
             GREEN
