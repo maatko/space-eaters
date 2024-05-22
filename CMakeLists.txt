@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.28)
-project(space-eaters CXX)
+project(space-eaters C)
 
 # C language version
 set(CMAKE_C_STANDARD 99)
