@@ -5,7 +5,14 @@
 #include <sprite/spritesheet.h>
 #include <entity/entity.h>
 
-data_t data;
+data_t data = 
+{
+    .speed = {
+        .player = 400,
+        .enemy = 200,
+        .star = 400
+    }
+};
 
 int main(void) {
     SetConfigFlags(FLAG_VSYNC_HINT);

@@ -76,6 +76,7 @@ component_t* entity_component_get(entity_t* entity, void* component)
         if (component_ptr->on_update == component)
             return component_ptr;
     }
+    return NULL;
 }
 
 void entity_update(float screen_width, float screen_height, float frame_time)

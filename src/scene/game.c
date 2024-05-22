@@ -15,17 +15,28 @@
 static void on_collide(entity_t* entity, entity_t* target)
 {
     component_t* target_renderer = entity_component_get(target, render_component);
-    assert(target_renderer != NULL);
-
     component_t* entity_renderer = entity_component_get(entity, render_component);
-    assert(entity_renderer != NULL);
+    if (target_renderer == NULL || entity_renderer == NULL)
+        return;
+
 
     const sprite_t* target_sprite = (const sprite_t*) target_renderer->data;
-    assert(target_sprite != NULL);
-    
     const sprite_t* entity_sprite = (const sprite_t*) entity_renderer->data;
-    assert(entity_sprite != NULL);
+    if (target_sprite == NULL || entity_sprite == NULL)
+        return;
 
+    if (entity_sprite == &spritesheet.sprites.bomb)
+    {
+        if (target_sprite != &spritesheet.sprites.player_still)
+            return;
+        
+        data.score += 500;
+        data.bombs++;
+
+        entity_delete(entity);
+        return;
+    }
+  
     if (target_sprite == &spritesheet.sprites.enemy_yellow)
     {
         data.score += 100;
@@ -35,7 +46,7 @@ static void on_collide(entity_t* entity, entity_t* target)
             entity_t* bomb = entity_add(entity->pos_x, entity->pos_y, PLAYER_WIDTH / 1.5f, PLAYER_HEIGHT / 1.5f);
             {
                 entity_component_add(bomb, render_component, (void*)&spritesheet.sprites.bomb);
-                entity_component_add(bomb, gravity_component, (void*)&data.star_speed);
+                entity_component_add(bomb, gravity_component, (void*)&data.speed.star);
                 entity_component_add(bomb, collision_component, NULL);
             }
         }
@@ -43,31 +54,17 @@ static void on_collide(entity_t* entity, entity_t* target)
         entity_delete(entity);
         entity_delete(target);
     }
-    else if (target_sprite == &spritesheet.sprites.player_still)
-    {
-        if (entity_sprite != &spritesheet.sprites.bomb)
-            return;
-
-        data.score += 500;
-
-        entity_delete(entity);
-        data.bombs++;
-    }
 }
 
 static void on_show(float screen_width, float screen_height)
 {
     srand((unsigned int)time(NULL));
 
-    data.collision_callback = on_collide;
-
     data.score = 0;
     data.hearts = 1;
     data.bombs = 0;
 
-    data.player_speed = 350.0f;
-    data.star_speed = 150.0f;
-    data.enemy_speed = data.player_speed / 2.0f;
+    data.collision_callback = on_collide;
 
     const sprite_t* star_sprite = &spritesheet.sprites.star;
     {
@@ -83,7 +80,7 @@ static void on_show(float screen_width, float screen_height)
             entity_t* star = entity_add(x_offset, screen_height * 0.2f + (rand() / (float) RAND_MAX) * 500.0f, star_width, star_height);
             {
                 entity_component_add(star, render_component, (void*)star_sprite);
-                entity_component_add(star, gravity_component, (void*)&data.star_speed);
+                entity_component_add(star, gravity_component, (void*)&data.speed.star);
             }
             x_offset += star_width + star_padding;
         }
@@ -92,7 +89,7 @@ static void on_show(float screen_width, float screen_height)
     entity_t* player = entity_add((screen_width - PLAYER_WIDTH) / 2.0f, screen_height - PLAYER_HEIGHT * 1.5f, PLAYER_WIDTH, PLAYER_HEIGHT);
     {
         entity_component_add(player, render_component, (void*) &spritesheet.sprites.player_still);
-        entity_component_add(player, controller_component, (void*)&data.player_speed);
+        entity_component_add(player, controller_component, (void*)&data.speed.player);
     }
 }
 
@@ -205,7 +202,7 @@ static bool on_update(float screen_width, float screen_height, float frame_time)
             swerve->flip = false;
 
             entity_component_add(enemy, render_component, (void*)&spritesheet.sprites.enemy_yellow);
-            entity_component_add(enemy, gravity_component, (void*)&data.enemy_speed);
+            entity_component_add(enemy, gravity_component, (void*)&data.speed.enemy);
             entity_component_add(enemy, swerve_component, (void*)enemy);
 
             enemy->data = (void*) swerve;
