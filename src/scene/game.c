@@ -101,7 +101,7 @@ static bool on_update(float screen_width, float screen_height, float frame_time)
     if (IsKeyPressed(KEY_ESCAPE))
         return scene_show(&menu_scene);
 
-    if (data.hearts <= 0)
+    if (data.hearts <= 0) 
         return scene_show(&over_scene);
 
     data.score += 2.5f * frame_time;

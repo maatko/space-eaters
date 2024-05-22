@@ -13,13 +13,11 @@ static bool on_update(float screen_width, float screen_height, float frame_time)
         sprintf(text, "Game Over!");
         DrawText(text, (screen_width - MeasureText(text, 50)) / 2.0f, 150, 50, WHITE);
 
-        float animation = (float) 1.5f - fabs(sin((double) GetTime()));
-
-        sprintf(text, "%f", data.score);
+        sprintf(text, "%d", (int)data.score);
         DrawText(text, (screen_width - MeasureText(text, 35)) / 2.0f, 150 + 75, 35, WHITE);
 
         sprintf(text, "Press `ENTER` to continue!");
-        DrawText(text, (screen_width - MeasureText(text, 35)) / 2.0f, 150 + 75 + 55, 35, WHITE);
+        DrawText(text, (screen_width - MeasureText(text, 35)) / 2.0f, 150 + 75 + 65, 35, WHITE);
     }
 
     return false;
