@@ -1,5 +1,7 @@
 #include "component.h"
 
+#include <stddef.h>
+
 #include <sprite/spritesheet.h>
 #include <entity/entity.h>
 

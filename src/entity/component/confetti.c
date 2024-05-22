@@ -1,6 +1,8 @@
 #include "component.h"
 
 #include <assert.h>
+#include <stdlib.h>
+
 #include <entity/entity.h>
 
 void confetti_component(entity_t* entity, void* component_data, float screen_width, float screen_height, float frame_time)
