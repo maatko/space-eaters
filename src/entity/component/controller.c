@@ -19,7 +19,7 @@ void controller_component(entity_t* entity, void* component_data, float screen_w
             entity->pos_x = screen_width - entity->width;
     }
 
-    if (IsKeyPressed(KEY_SPACE))
+    if (IsKeyPressed(KEY_UP))
     {
         const sprite_t* bullet_sprite = &spritesheet.sprites.bullet;
         {

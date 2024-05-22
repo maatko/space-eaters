@@ -23,5 +23,6 @@ void scene_free();
 
 extern scene_t menu_scene;
 extern scene_t game_scene;
+extern scene_t over_scene;
 
 #endif //SCENE_H

@@ -37,6 +37,8 @@ entity_t* entity_add(float x, float y, float width, float height);
 
 component_t* entity_component_add(entity_t* entity, on_component_update component_update, void* data);
 
+component_t* entity_component_get(entity_t* entity, void* component);
+
 void entity_update(float screen_width, float screen_height, float frame_time);
 
 void entity_delete(entity_t* entity);

@@ -68,6 +68,16 @@ component_t* entity_component_add(entity_t* entity, on_component_update componen
     return component;
 }
 
+component_t* entity_component_get(entity_t* entity, void* component)
+{
+    for(int i = 0; i < entity->component_count; i++)
+    {
+        component_t* component_ptr = &entity->components[i];
+        if (component_ptr->on_update == component)
+            return component_ptr;
+    }
+}
+
 void entity_update(float screen_width, float screen_height, float frame_time)
 {
     entity_t* it = entities;

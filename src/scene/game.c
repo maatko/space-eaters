@@ -14,7 +14,45 @@
 
 static void on_collide(entity_t* entity, entity_t* target)
 {
-    data.score += 100;
+    component_t* target_renderer = entity_component_get(target, render_component);
+    assert(target_renderer != NULL);
+
+    component_t* entity_renderer = entity_component_get(entity, render_component);
+    assert(entity_renderer != NULL);
+
+    const sprite_t* target_sprite = (const sprite_t*) target_renderer->data;
+    assert(target_sprite != NULL);
+    
+    const sprite_t* entity_sprite = (const sprite_t*) entity_renderer->data;
+    assert(entity_sprite != NULL);
+
+    if (target_sprite == &spritesheet.sprites.enemy_yellow)
+    {
+        data.score += 100;
+
+        if ((rand() / (float)RAND_MAX) <= 0.25f)
+        {
+            entity_t* bomb = entity_add(entity->pos_x, entity->pos_y, PLAYER_WIDTH / 1.5f, PLAYER_HEIGHT / 1.5f);
+            {
+                entity_component_add(bomb, render_component, (void*)&spritesheet.sprites.bomb);
+                entity_component_add(bomb, gravity_component, (void*)&data.star_speed);
+                entity_component_add(bomb, collision_component, NULL);
+            }
+        }
+
+        entity_delete(entity);
+        entity_delete(target);
+    }
+    else if (target_sprite == &spritesheet.sprites.player_still)
+    {
+        if (entity_sprite != &spritesheet.sprites.bomb)
+            return;
+
+        data.score += 500;
+
+        entity_delete(entity);
+        data.bombs++;
+    }
 }
 
 static void on_show(float screen_width, float screen_height)
@@ -62,6 +100,9 @@ static bool on_update(float screen_width, float screen_height, float frame_time)
 {
     if (IsKeyPressed(KEY_ESCAPE))
         return scene_show(&menu_scene);
+
+    if (data.hearts <= 0)
+        return scene_show(&over_scene);
 
     data.score += 2.5f * frame_time;
 
