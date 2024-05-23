@@ -46,7 +46,7 @@ static void on_collide(entity_t* entity, entity_t* target)
             entity_t* bomb = entity_add(entity->pos_x, entity->pos_y, PLAYER_WIDTH / 1.5f, PLAYER_HEIGHT / 1.5f);
             {
                 entity_component_add(bomb, render_component, (void*)&spritesheet.sprites.bomb);
-                entity_component_add(bomb, gravity_component, (void*)&data.speed.star);
+                entity_component_add(bomb, gravity_component, (void*)&data.speed.bomb);
                 entity_component_add(bomb, collision_component, NULL);
             }
         }
@@ -64,7 +64,7 @@ static void on_show(float screen_width, float screen_height)
     data.hearts = 1;
     data.bombs = 0;
 
-    data.collision_callback = on_collide;
+    data.on_collide = on_collide;
 
     const sprite_t* star_sprite = &spritesheet.sprites.star;
     {
@@ -206,7 +206,6 @@ static bool on_update(float screen_width, float screen_height, float frame_time)
             entity_component_add(enemy, swerve_component, (void*)enemy);
 
             enemy->data = (void*) swerve;
-            enemy->enemy = true;
         }
         spawn_timer = 0;
     }
@@ -215,7 +214,7 @@ static bool on_update(float screen_width, float screen_height, float frame_time)
     return false;
 }
 
-scene_t game_scene =
+const scene_t game_scene =
 {
     .on_show    = on_show,
     .on_update  = on_update,

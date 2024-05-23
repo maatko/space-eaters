@@ -19,8 +19,6 @@ typedef struct entity_t
     float width;
     float height;
 
-    bool enemy;
-
     // any data that needs to be
     // tracked between components
     void* data;
@@ -32,17 +30,13 @@ typedef struct entity_t
 } entity_t;
 
 entity_t* entity_list();
-
 entity_t* entity_add(float x, float y, float width, float height);
 
 component_t* entity_component_add(entity_t* entity, on_component_update component_update, void* data);
-
 component_t* entity_component_get(entity_t* entity, void* component);
 
 void entity_update(float screen_width, float screen_height, float frame_time);
-
 void entity_delete(entity_t* entity);
-
 void entity_free();
 
 #endif //ENTITY_D

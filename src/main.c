@@ -9,8 +9,9 @@ data_t data =
 {
     .speed = {
         .player = 400,
-        .enemy = 200,
-        .star = 400
+        .enemy  = 200,
+        .star   = 400,
+        .bomb   = 150
     }
 };
 

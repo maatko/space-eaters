@@ -5,9 +5,9 @@
 
 #include <entity/entity.h>
 
-static scene_t* current_scene = NULL;
+static const scene_t* current_scene = NULL;
 
-bool scene_show(scene_t* scene)
+bool scene_show(const scene_t* scene)
 {
     if (current_scene != NULL && current_scene->on_hide != NULL)
         current_scene->on_hide();

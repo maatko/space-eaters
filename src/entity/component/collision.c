@@ -17,8 +17,8 @@ void collision_component(entity_t* entity, void* component_data, float screen_wi
 
             if (CheckCollisionRecs(target, bullet))
             {
-                if (data.collision_callback != NULL)
-                    data.collision_callback(entity, it);
+                if (data.on_collide != NULL)
+                    data.on_collide(entity, it);
             }
         }
         it = it->next;

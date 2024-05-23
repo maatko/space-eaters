@@ -26,7 +26,7 @@ entity_t* entity_add(float x, float y, float width, float height)
         entity->height = height;
 
         entity->next = NULL;
-        entity->previous = NULL;  
+        entity->previous = NULL;
     }
 
     if (entities == NULL)

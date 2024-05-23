@@ -23,7 +23,7 @@ static bool on_update(float screen_width, float screen_height, float frame_time)
     return false;
 }
 
-scene_t over_scene = {
+const scene_t over_scene = {
     .on_show    = NULL,
     .on_update  = on_update,
     .on_hide    = NULL

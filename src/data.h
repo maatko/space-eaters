@@ -10,14 +10,15 @@ typedef struct data_t
     int hearts;
     int bombs;
 
-    struct 
+    struct
     {
         float player;
         float enemy;
         float star;
+        float bomb;
     } speed;
 
-    collision_callback collision_callback;
+    collision_callback on_collide;
 } data_t;
 
 extern data_t data;

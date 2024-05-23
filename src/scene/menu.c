@@ -95,7 +95,7 @@ static bool on_update(float screen_width, float screen_height, float frame_time)
     return scene_button("Quit", pos_x, pos_y, BUTTON_WIDTH, BUTTON_HEIGHT, 20);
 }
 
-scene_t menu_scene =
+const scene_t menu_scene =
 {
     .on_show    = on_show,
     .on_update  = on_update,
