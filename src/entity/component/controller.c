@@ -1,5 +1,7 @@
 #include "component.h"
 
+#include <stddef.h>
+
 #include <entity/entity.h>
 
 static const float bullet_speed = -250.0f;

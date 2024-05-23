@@ -1,6 +1,7 @@
 #include "component.h"
 
 #include <assert.h>
+#include <stddef.h>
 
 #include <data.h>
 #include <entity/entity.h>
