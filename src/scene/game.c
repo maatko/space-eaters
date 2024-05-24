@@ -40,6 +40,18 @@ static void on_collide(entity_t* entity, entity_t* target)
         return;
     }
   
+    if (entity_sprite == &spritesheet.sprites.heart)
+    {
+        if (target_sprite != &spritesheet.sprites.player_still)
+            return;
+        
+        data.score += 1000;
+        data.hearts++;
+
+        entity_delete(entity);
+        return;
+    }
+
     if (target_sprite == &spritesheet.sprites.enemy_yellow)
     {
         data.score += 100;
@@ -49,6 +61,16 @@ static void on_collide(entity_t* entity, entity_t* target)
             entity_t* bomb = entity_add(entity->pos_x, entity->pos_y, PLAYER_WIDTH / 1.5f, PLAYER_HEIGHT / 1.5f);
             {
                 entity_component_add(bomb, render_component, (void*)&spritesheet.sprites.bomb);
+                entity_component_add(bomb, gravity_component, (void*)&data.speed.bomb);
+                entity_component_add(bomb, collision_component, NULL);
+            }
+        }
+
+        if ((rand() / (float)RAND_MAX) <= 0.15f)
+        {
+            entity_t* bomb = entity_add(entity->pos_x, entity->pos_y, PLAYER_WIDTH / 1.5f, PLAYER_HEIGHT / 1.5f);
+            {
+                entity_component_add(bomb, render_component, (void*)&spritesheet.sprites.heart);
                 entity_component_add(bomb, gravity_component, (void*)&data.speed.bomb);
                 entity_component_add(bomb, collision_component, NULL);
             }
