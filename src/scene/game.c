@@ -12,6 +12,9 @@
 #define PLAYER_WIDTH 32
 #define PLAYER_HEIGHT 32
 
+#define MIN(a, b) ((a < b) ? b : a)
+#define MAX(a, b) ((a > b) ? b : a)
+
 static void on_collide(entity_t* entity, entity_t* target)
 {
     component_t* target_renderer = entity_component_get(target, render_component);
@@ -188,28 +191,19 @@ static bool on_update(float screen_width, float screen_height, float frame_time)
     }
 
     static float spawn_timer = 0.0f;
-    if (spawn_timer >= 2.0f)
+    if (spawn_timer >= 1.0f)
     {
         static const float enemy_width = PLAYER_WIDTH / 1.5f;
         static const float enemy_height = PLAYER_HEIGHT / 1.5f;
 
         entity_t* enemy = entity_add((rand() / (float) RAND_MAX) * (screen_width - (enemy_width * 1.5f)), frame_height - enemy_height, enemy_width, enemy_height);
         {
-            swerve_t* swerve = (swerve_t*) malloc(sizeof(swerve_t));
-            assert(swerve != NULL);
-
-            swerve->speed = 150.0f;
-            swerve->flip = false;
-
             entity_component_add(enemy, render_component, (void*)&spritesheet.sprites.enemy_yellow);
             entity_component_add(enemy, gravity_component, (void*)&data.speed.enemy);
-            entity_component_add(enemy, swerve_component, (void*)enemy);
-
-            enemy->data = (void*) swerve;
         }
         spawn_timer = 0;
     }
-    spawn_timer += 0.5f * frame_time;
+    spawn_timer += MAX(1.0f, MIN(0.25f, 1.0f * (data.score / 1000.0f))) * frame_time;
 
     return false;
 }

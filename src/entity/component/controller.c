@@ -2,6 +2,7 @@
 
 #include <stddef.h>
 
+#include <data.h>
 #include <entity/entity.h>
 
 static const float bullet_speed = -250.0f;
@@ -34,6 +35,33 @@ void controller_component(entity_t* entity, void* component_data, float screen_w
                 entity_component_add(bullet, gravity_component, (void*)&bullet_speed);
                 entity_component_add(bullet, collision_component, NULL);
             }
+        }
+    }
+
+    if (IsKeyPressed(KEY_SPACE))
+    {
+        if (data.bombs < 1)
+            return;
+        
+        entity_t* it = entity_list();
+        while(it != NULL)
+        {
+            component_t* sprite_component = (component_t*) entity_component_get(it, render_component);
+            if (sprite_component == NULL)
+                continue;
+
+            const sprite_t* sprite = (const sprite_t*) sprite_component->data;
+            if (sprite == NULL)
+                continue;
+
+            if (sprite == &spritesheet.sprites.enemy_yellow)
+            {
+                entity_delete(it);
+                data.score += 100;
+                data.bombs--;
+            }
+
+            it = it->next;
         }
     }
 }
